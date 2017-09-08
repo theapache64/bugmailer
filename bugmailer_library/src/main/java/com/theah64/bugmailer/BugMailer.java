@@ -15,6 +15,8 @@ import javax.mail.internet.MimeMessage;
 
 /**
  * Created by shifar on 15/4/16.
+ * LOGO :  https://i.stack.imgur.com/21iAR.png
+ * Header: https://i.stack.imgur.com/U2JVG.png
  */
 public class BugMailer {
 

@@ -1,1 +1,1 @@
-include ':app', ':bugmailer_library'
+include ':app', ':bugmailer_library', ':lib'

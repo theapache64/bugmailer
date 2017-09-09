@@ -6,6 +6,7 @@ import com.theah64.bugmailer.core.BugMailer;
 import com.theah64.bugmailer.core.BugMailerConfig;
 import com.theah64.bugmailer.core.Colors;
 import com.theah64.bugmailer.exceptions.BugMailerException;
+import com.theah64.retrokit.retro.RetroKit;
 
 
 /**
@@ -27,6 +28,8 @@ public class App extends Application {
         } catch (BugMailerException e) {
             e.printStackTrace();
         }
+
+        RetroKit.getInstance().setRetrofitBaseURL("http://google.com/");
 
     }
 }

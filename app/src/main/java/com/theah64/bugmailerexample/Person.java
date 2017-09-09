@@ -16,7 +16,7 @@ public class Person implements BugMailerNode {
     private final String name;
     private final String age;
 
-    public Person(String name, String age) {
+    Person(String name, String age) {
         this.name = name;
         this.age = age;
     }

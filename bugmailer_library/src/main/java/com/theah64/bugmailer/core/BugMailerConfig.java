@@ -11,11 +11,11 @@ import java.util.List;
 
 public class BugMailerConfig {
 
+
     private final Context context;
     private final String emailUsername, emailPassword;
     private String themeColor;
     private final List<String> recipients = new ArrayList<>();
-    private boolean reportDeliveryToast = false;
 
     public BugMailerConfig(Context context, String emailUsername, String emailPassword, String primaryRecipient) {
         this.context = context;
@@ -33,15 +33,6 @@ public class BugMailerConfig {
     public BugMailerConfig addRepientEmail(String email) {
         recipients.add(email);
         return this;
-    }
-
-    public BugMailerConfig setReportDeliveryToast(boolean reportDeliveryToast) {
-        this.reportDeliveryToast = reportDeliveryToast;
-        return this;
-    }
-
-    public boolean isReportDeliveryToast() {
-        return reportDeliveryToast;
     }
 
     public Context getContext() {
@@ -63,5 +54,4 @@ public class BugMailerConfig {
     public List<String> getRecipients() {
         return recipients;
     }
-
 }

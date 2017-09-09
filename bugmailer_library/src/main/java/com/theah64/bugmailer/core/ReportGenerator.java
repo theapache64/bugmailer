@@ -26,6 +26,7 @@ class ReportGenerator {
         f1 = f1.replaceAll(KEY_PACKAGE_NAME, packageName);
 
         primaryStackLine = primaryStackLine.replaceAll("\\{.+\\}", "");
+        primaryStackLine = primaryStackLine.replaceAll(packageName, "");
         final String[] lines = primaryStackLine.split(":");
         final StringBuilder queryBuilder = new StringBuilder();
         for (int i = 0; i < (lines.length > 3 ? 3 : lines.length); i++) {

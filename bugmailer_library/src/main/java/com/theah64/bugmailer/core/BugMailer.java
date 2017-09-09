@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.widget.Toast;
 
 import com.theah64.bugmailer.exceptions.BugMailerException;
 import com.theah64.bugmailer.models.BoldNode;
@@ -31,8 +30,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class BugMailer {
 
-
-    private static final String DEFAULT_THEME_COLOR = "#F44336";
+    private static final String DEFAULT_THEME_COLOR = Colors.MATERIAL_RED_500;
 
     private static final String X = BugMailer.class.getSimpleName();
     private static String projectName;
@@ -42,6 +40,7 @@ public class BugMailer {
     private static String appVersionName;
     private static String themeColor;
     private static BugMailerConfig config;
+    private static int appVersionCode;
 
 
     public static void init(final BugMailerConfig config) throws BugMailerException {
@@ -57,7 +56,8 @@ public class BugMailer {
             throw new BugMailerException("Couldn't find package name. Default 'Unknown' set");
         }
 
-        BugMailer.appVersionName = String.format("v%s - %d", packageInfo.versionName, packageInfo.versionCode);
+        BugMailer.appVersionName = packageInfo.versionName;
+        BugMailer.appVersionCode = packageInfo.versionCode;
         BugMailer.projectName = (String) context.getApplicationInfo().loadLabel(context.getPackageManager());
 
         BugMailer.gmailUsername = config.getEmailUsername();
@@ -120,25 +120,9 @@ public class BugMailer {
 
                     System.out.println("BugReport sent");
 
-                    /*if (config.isReportDeliveryToast()) {
-                        System.out.println("Displaying toast");
-
-                        new Handler(Looper.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                System.out.println("TOAST DISPLAYED");
-                                Toast.makeText(config.getContext(), "Bug report sent", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }*/
-
                 } catch (MessagingException e) {
                     e.printStackTrace();
                     System.out.println("Failed to send mail");
-
-                    if (config.isReportDeliveryToast()) {
-                        Toast.makeText(config.getContext().getApplicationContext(), "Failed to send bug report", Toast.LENGTH_SHORT).show();
-                    }
                 }
 
                 return null;
@@ -173,7 +157,7 @@ public class BugMailer {
 
     public static void report(Throwable e, BugMailerNode customNode) {
 
-//Getting stack trace
+        //Getting stack trace
         final String stackTrace = CommonUtils.getStackTrace(e);
         final String[] stackLines = stackTrace.split("\n");
         final String primaryStackLine = stackLines[0] + " " + stackLines[1].trim();
@@ -192,7 +176,8 @@ public class BugMailer {
 
         final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine)
                 .addNode(new BoldNode("Fatal error", primaryStackLineHTML))
-                .addNode(new Node("App version", BugMailer.getAppVersionName()))
+                .addNode(new Node("App version name", BugMailer.getAppVersionName()))
+                .addNode(new Node("App version code", BugMailer.getAppVersionCode()))
                 .addNode(new Node("Filename", e.getStackTrace()[0].getFileName()))
                 .addNode(new Node("API Level", Build.VERSION.SDK_INT))
                 .addNode(new Node("Device", Build.DEVICE))
@@ -204,5 +189,9 @@ public class BugMailer {
 
         sendMail(errorReport);
 
+    }
+
+    private static int getAppVersionCode() {
+        return appVersionCode;
     }
 }

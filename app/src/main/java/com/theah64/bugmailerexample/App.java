@@ -2,7 +2,9 @@ package com.theah64.bugmailerexample;
 
 import android.app.Application;
 
-import com.theah64.bugmailer.BugMailer;
+import com.theah64.bugmailer.core.BugMailer;
+import com.theah64.bugmailer.core.BugMailerConfig;
+import com.theah64.bugmailer.exceptions.BugMailerException;
 
 
 /**
@@ -15,6 +17,15 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        BugMailer.init("mymailer64@gmail.com", "mypassword64", "theapache64@gmail.com");
+        final BugMailerConfig config = new BugMailerConfig(this, "mymailer64@gmail.com", "mypassword64", "theapache64@gmail.com")
+                .addRepientEmail("faisal@cybaze.com")
+                .setReportDeliveryToast(true);
+
+        try {
+            BugMailer.init(config);
+        } catch (BugMailerException e) {
+            e.printStackTrace();
+        }
+
     }
 }

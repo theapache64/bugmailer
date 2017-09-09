@@ -23,7 +23,7 @@ public class Colors {
     public static final String MATERIAL_DEEP_ORANGE_GREEN_500 = "#FF5722";
     public static final String MATERIAL_DEEP_BROWN_GREEN_500 = "#795548";
     public static final String MATERIAL_DEEP_GREY_GREEN_500 = "#9E9E9E";
-    public static final String MATERIAL_DEEP_BLUE_GREY_500 = "#607D8B";
+    public static final String MATERIAL_DEEP_BLUE_500 = "#607D8B";
     public static final String WHITE = "#FFFFFF";
     public static final String BLACK = "#000000";
 }

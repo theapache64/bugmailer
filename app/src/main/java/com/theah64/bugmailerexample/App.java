@@ -18,8 +18,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        final BugMailerConfig config = new BugMailerConfig(this, "mymailer64@gmail.com", "mypassword64", "theapache64@gmail.com")
-                .setThemeColor(Colors.MATERIAL_CYAN_BLUE_500)
+        final BugMailerConfig config = new BugMailerConfig(this, "theapache64@gmail.com")
+                .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500)
                 .addRepientEmail("faisal@cybaze.com");
 
         try {

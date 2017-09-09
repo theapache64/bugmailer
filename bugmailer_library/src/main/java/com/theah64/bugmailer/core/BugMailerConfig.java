@@ -11,6 +11,8 @@ import java.util.List;
 
 public class BugMailerConfig {
 
+    private static final String DEFAULT_GMAIL_USERNAME = "mymailer64@gmail.com";
+    private static final String DEFAULT_GMAIL_PASSWORD = "mypassword64";
 
     private final Context context;
     private final String emailUsername, emailPassword;
@@ -22,6 +24,10 @@ public class BugMailerConfig {
         this.emailUsername = emailUsername;
         this.emailPassword = emailPassword;
         recipients.add(primaryRecipient);
+    }
+
+    public BugMailerConfig(Context context, String primaryRecipient) {
+        this(context, DEFAULT_GMAIL_USERNAME, DEFAULT_GMAIL_PASSWORD, primaryRecipient);
     }
 
 

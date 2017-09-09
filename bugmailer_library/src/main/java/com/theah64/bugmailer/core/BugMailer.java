@@ -164,7 +164,8 @@ public class BugMailer {
         //Getting stack trace
         final String stackTrace = CommonUtils.getStackTrace(e);
         final String[] stackLines = stackTrace.split("\n");
-        final String primaryStackLine = String.format("<span style='color:#THEMECOLOR;'>%s %s</span>", stackLines[0], stackLines[1].trim());
+        final String primaryStackLine = stackLines[0] + " " + stackLines[1].trim();
+        final String primaryStackLineHTML = String.format("<span style='color:#THEMECOLOR;'>%s %s</span>", stackLines[0], stackLines[1].trim());
 
         final StringBuilder stackTraceBuilder = new StringBuilder();
         for (final String stackLine : stackLines) {
@@ -177,8 +178,8 @@ public class BugMailer {
             stackTraceBuilder.append("<br>");
         }
 
-        final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName())
-                .addNode(new BoldNode("Fatal error", primaryStackLine))
+        final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine)
+                .addNode(new BoldNode("Fatal error", primaryStackLineHTML))
                 .addNode(new Node("App version", BugMailer.getAppVersionName()))
                 .addNode(new Node("Filename", e.getStackTrace()[0].getFileName()))
                 .addNode(new Node("API Level", Build.VERSION.SDK_INT))

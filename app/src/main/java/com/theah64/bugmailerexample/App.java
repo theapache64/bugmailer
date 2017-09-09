@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        
         final BugMailerConfig config = new BugMailerConfig(this, "mymailer64@gmail.com", "mypassword64", "theapache64@gmail.com")
                 .addRepientEmail("faisal@cybaze.com")
                 .setReportDeliveryToast(true);

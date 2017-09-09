@@ -1,5 +1,7 @@
 package com.theah64.bugmailer.core;
 
+import android.support.annotation.Nullable;
+
 import com.theah64.bugmailer.models.Node;
 
 /**
@@ -47,4 +49,12 @@ class ReportGenerator {
         return this;
     }
 
+    ReportGenerator addCustomNode(@Nullable BugMailerNode customNode) {
+        if (customNode != null) {
+            for (int i = 0; i < customNode.getNodes().size(); i++) {
+                addNode(customNode.getNodes().get(i));
+            }
+        }
+        return this;
+    }
 }

@@ -159,9 +159,21 @@ public class BugMailer {
         return appVersionName;
     }
 
-    static void report(Throwable e) {
+    public static void report(Throwable e) {
+        report(e, null);
+    }
 
-        //Getting stack trace
+    public static void setThemeColor(String themeColor) {
+        BugMailer.themeColor = themeColor;
+    }
+
+    public static String getThemeColor() {
+        return themeColor;
+    }
+
+    public static void report(Throwable e, BugMailerNode customNode) {
+
+//Getting stack trace
         final String stackTrace = CommonUtils.getStackTrace(e);
         final String[] stackLines = stackTrace.split("\n");
         final String primaryStackLine = stackLines[0] + " " + stackLines[1].trim();
@@ -187,16 +199,10 @@ public class BugMailer {
                 .addNode(new Node("Model", Build.MODEL))
                 .addNode(new Node("Product", Build.PRODUCT))
                 .addNode(new Node("Exception message", stackTraceBuilder.toString()))
+                .addCustomNode(customNode)
                 .build();
 
         sendMail(errorReport);
-    }
 
-    public static void setThemeColor(String themeColor) {
-        BugMailer.themeColor = themeColor;
-    }
-
-    public static String getThemeColor() {
-        return themeColor;
     }
 }

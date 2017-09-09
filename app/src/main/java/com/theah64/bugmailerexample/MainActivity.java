@@ -14,8 +14,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Person person = new Person("Anooj", "20");
+
         if (true) {
-            BugMailer.report(new JSONException("Hello"), new Person("Faisal", "20"));
+            BugMailer.report(new JSONException("JSON Failed"), person);
         }
     }
 

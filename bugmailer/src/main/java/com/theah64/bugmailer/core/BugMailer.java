@@ -11,6 +11,7 @@ import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
 import com.theah64.bugmailer.utils.CommonUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -180,6 +181,7 @@ public class BugMailer {
                 .addNode(new Node("App version code", BugMailer.getAppVersionCode()))
                 .addNode(new Node("Filename", e.getStackTrace()[0].getFileName()))
                 .addNode(new Node("API Level", Build.VERSION.SDK_INT))
+                .addNode(new Node("Time of occurrence", new Date().toString()))
                 .addNode(new Node("Device", Build.DEVICE))
                 .addNode(new Node("Model", Build.MODEL))
                 .addNode(new Node("Product", Build.PRODUCT))

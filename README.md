@@ -4,6 +4,7 @@ A simple android library to get bug reports instantly via email
 ### How to integrate this library ?
 
 **Step one - Add to build.gradle**
+
 `compile 'com.theah64.bugmailer:bugmailer:1.0.4'`
 
 **Step two - Initialize BugMailer in application instance**

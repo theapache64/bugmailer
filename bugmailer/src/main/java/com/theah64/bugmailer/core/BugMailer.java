@@ -44,7 +44,7 @@ public class BugMailer {
     private static int appVersionCode;
 
 
-    public static void init(final Context context,final BugMailerConfig config) throws BugMailerException {
+    public static void init(final Context context, final BugMailerConfig config) throws BugMailerException {
 
         BugMailer.packageName = context.getPackageName();
 
@@ -118,7 +118,7 @@ public class BugMailer {
 
                     Transport.send(mimeMessage);
 
-                    System.out.println("BugReport sent");
+                    System.out.println("BugReport sent\n" + message);
 
                 } catch (MessagingException e) {
                     e.printStackTrace();

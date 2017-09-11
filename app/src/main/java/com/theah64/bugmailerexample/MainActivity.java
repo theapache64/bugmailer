@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.theah64.bugmailer.core.BugMailer;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,9 +15,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Person person = new Person("//Anooj//", "20");
+        final Person person = new Person("theapache64", "20");
 
-        BugMailer.report(new JSONException("Sample json exception"), person);
+        try {
+            JSONObject jo = new JSONObject("custom-json");
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            //Manually reporting with custom object
+            BugMailer.report(e, person);
+        }
+
     }
 
 }

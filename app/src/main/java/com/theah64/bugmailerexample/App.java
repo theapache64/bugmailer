@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.theah64.bugmailer.core.BugMailer;
 import com.theah64.bugmailer.core.BugMailerConfig;
-import com.theah64.bugmailer.core.Colors;
 import com.theah64.bugmailer.exceptions.BugMailerException;
 
 
@@ -18,11 +17,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        final BugMailerConfig config = new BugMailerConfig("theapache64@gmail.com")
-                .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500);
 
         try {
-            BugMailer.init(this, config);
+            BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword", "theapache64@gmail.com"));
         } catch (BugMailerException e) {
             e.printStackTrace();
         }

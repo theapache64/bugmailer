@@ -6,7 +6,6 @@ import com.theah64.bugmailer.core.BugMailer;
 import com.theah64.bugmailer.core.BugMailerConfig;
 import com.theah64.bugmailer.core.Colors;
 import com.theah64.bugmailer.exceptions.BugMailerException;
-import com.theah64.retrokit.retro.RetroKit;
 
 
 /**
@@ -20,8 +19,7 @@ public class App extends Application {
         super.onCreate();
 
         final BugMailerConfig config = new BugMailerConfig(this, "theapache64@gmail.com")
-                .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500)
-                .addRepientEmail("faisal@cybaze.com");
+                .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500);
 
         try {
             BugMailer.init(config);
@@ -29,7 +27,6 @@ public class App extends Application {
             e.printStackTrace();
         }
 
-        RetroKit.getInstance().setRetrofitBaseURL("http://google.com/");
 
     }
 }

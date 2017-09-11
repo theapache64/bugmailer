@@ -160,7 +160,7 @@ public class BugMailer {
         //Getting stack trace
         final String stackTrace = CommonUtils.getStackTrace(e);
         final String[] stackLines = stackTrace.split("\n");
-        final String primaryStackLine = stackLines[0] + " " + stackLines[1].trim();
+        final String primaryStackLine = stackLines.length > 1 ? stackLines[0] + " " + stackLines[1].trim() : stackTrace;
         final String primaryStackLineHTML = String.format("<span style='color:#THEMECOLOR;'>%s %s</span>", stackLines[0], stackLines[1].trim());
 
         final StringBuilder stackTraceBuilder = new StringBuilder();

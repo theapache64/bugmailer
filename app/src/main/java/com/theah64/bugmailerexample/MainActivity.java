@@ -16,8 +16,10 @@ public class MainActivity extends AppCompatActivity {
 
         final Person person = new Person("Anooj", "20");
 
+        BugMailer.report(new JSONException("Sample json exception"), person);
+
         if (true) {
-            BugMailer.report(new JSONException("JSON Failed"), person);
+
         }
     }
 

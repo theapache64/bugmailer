@@ -1,5 +1,7 @@
 package com.theah64.bugmailer.models;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by theapache64 on 9/9/17.
  */
@@ -12,15 +14,15 @@ public class Node {
 
     private final StringBuilder report;
 
-    public Node(final String key, final String value) {
+    public Node(@NonNull final String key, @NonNull final String value) {
         report = new StringBuilder(KEY_HEADER)
                 .append(key)
                 .append(KEY_FOOTER)
-                .append(value)
+                .append(value.replaceAll("\n", "<br>"))
                 .append(VALUE_FOOTER);
     }
 
-    public Node(String key, int sdkInt) {
+    public Node(@NonNull String key, int sdkInt) {
         this(key, String.valueOf(sdkInt));
     }
 

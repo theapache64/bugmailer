@@ -14,20 +14,18 @@ public class BugMailerConfig {
     private static final String DEFAULT_GMAIL_USERNAME = "mymailer64@gmail.com";
     private static final String DEFAULT_GMAIL_PASSWORD = "mypassword64";
 
-    private final Context context;
     private final String emailUsername, emailPassword;
     private String themeColor;
     private final List<String> recipients = new ArrayList<>();
 
-    public BugMailerConfig(Context context, String emailUsername, String emailPassword, String primaryRecipient) {
-        this.context = context;
+    public BugMailerConfig(String emailUsername, String emailPassword, String primaryRecipient) {
         this.emailUsername = emailUsername;
         this.emailPassword = emailPassword;
         recipients.add(primaryRecipient);
     }
 
-    public BugMailerConfig(Context context, String primaryRecipient) {
-        this(context, DEFAULT_GMAIL_USERNAME, DEFAULT_GMAIL_PASSWORD, primaryRecipient);
+    public BugMailerConfig(String primaryRecipient) {
+        this(DEFAULT_GMAIL_USERNAME, DEFAULT_GMAIL_PASSWORD, primaryRecipient);
     }
 
 
@@ -41,9 +39,6 @@ public class BugMailerConfig {
         return this;
     }
 
-    public Context getContext() {
-        return context;
-    }
 
     public String getEmailUsername() {
         return emailUsername;

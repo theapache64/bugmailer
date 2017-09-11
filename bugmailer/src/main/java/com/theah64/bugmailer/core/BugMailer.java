@@ -44,9 +44,8 @@ public class BugMailer {
     private static int appVersionCode;
 
 
-    public static void init(final BugMailerConfig config) throws BugMailerException {
+    public static void init(final Context context,final BugMailerConfig config) throws BugMailerException {
 
-        final Context context = config.getContext();
         BugMailer.packageName = context.getPackageName();
 
         final PackageInfo packageInfo;

@@ -16,8 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Person person = new Person("//Anooj//", "20");
 
-        BugMailer.report(new JSONException("Sample json exception"), new APIRequestBuilder(APIRequestBuilder.ROUTE_SEARCH_SUGGESTION, null)
-                .addParam("keyword", "gdfsgd"));
+        BugMailer.report(new JSONException("Sample json exception"), person);
     }
 
 }

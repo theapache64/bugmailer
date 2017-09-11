@@ -18,11 +18,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        final BugMailerConfig config = new BugMailerConfig(this, "theapache64@gmail.com")
+        final BugMailerConfig config = new BugMailerConfig("theapache64@gmail.com")
                 .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500);
 
         try {
-            BugMailer.init(config);
+            BugMailer.init(this, config);
         } catch (BugMailerException e) {
             e.printStackTrace();
         }

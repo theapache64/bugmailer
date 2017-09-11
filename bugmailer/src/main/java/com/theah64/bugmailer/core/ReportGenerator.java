@@ -22,11 +22,11 @@ class ReportGenerator {
 
     ReportGenerator(final String projectName, String packageName, String primaryStackLine) {
 
-        String f1 = HEADER.replaceAll(KEY_PROJECT_NAME, projectName);
-        f1 = f1.replaceAll(KEY_PACKAGE_NAME, packageName);
+        String f1 = HEADER.replace(KEY_PROJECT_NAME, projectName);
+        f1 = f1.replace(KEY_PACKAGE_NAME, packageName);
 
         primaryStackLine = primaryStackLine.replaceAll("\\{.+\\}", "");
-        primaryStackLine = primaryStackLine.replaceAll(packageName, "");
+        primaryStackLine = primaryStackLine.replace(packageName, "");
         final String[] lines = primaryStackLine.split(":");
         final StringBuilder queryBuilder = new StringBuilder();
         for (int i = 0; i < (lines.length > 3 ? 3 : lines.length); i++) {
@@ -41,8 +41,8 @@ class ReportGenerator {
     String build() {
         report.append(FOOTER);
         String f1 = report.toString();
-        f1 = f1.replaceAll(KEY_SEARCH_WITH_GOOGLE_QUERY, primaryStackLine);
-        return f1.replaceAll(KEY_THEMECOLOR, BugMailer.getThemeColor());
+        f1 = f1.replace(KEY_SEARCH_WITH_GOOGLE_QUERY, primaryStackLine);
+        return f1.replace(KEY_THEMECOLOR, BugMailer.getThemeColor());
     }
 
     ReportGenerator addNode(Node node) {

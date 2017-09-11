@@ -14,9 +14,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Person person = new Person("Anooj", "20");
+        final Person person = new Person("//Anooj//", "20");
 
-        BugMailer.report(new JSONException("Sample json exception"), person);
+        BugMailer.report(new JSONException("Sample json exception"), new APIRequestBuilder(APIRequestBuilder.ROUTE_SEARCH_SUGGESTION, null)
+                .addParam("keyword", "gdfsgd"));
     }
 
 }

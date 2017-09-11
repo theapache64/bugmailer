@@ -109,6 +109,7 @@ The  `Colors` class comes with all material `500` colors.
 You can also use custom colors with `#RGB`, `#RRGGBB` and `#AARRGGBB` formats.
 
 **Multiple mails**
+
 You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
 
 ```
@@ -123,6 +124,7 @@ You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
 ```
 
 **Custom email server**
+
 As default, `BugMailer` uses one of my test email addresses to send reports.Since the credentials are not stable, I suggest you to set your own email address and password.This can be done using the `init` method. 
 
 ***Example***
@@ -131,4 +133,5 @@ BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword",
 ```
 
 **Issue or Improvements**
-Shoot a mail to theapache64@gmail.com :)
+
+Shoot me a mail to theapache64@gmail.com :)

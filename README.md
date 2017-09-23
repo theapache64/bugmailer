@@ -8,7 +8,7 @@ A simple android library to get bug reports instantly via email
 `compile 'com.theah64.bugmailer:bugmailer:1.0.4'`
 
 **Step two - Initialize BugMailer in application instance**
-```
+```java
 public class App extends Application {
     
     
@@ -30,7 +30,7 @@ That's it!
 
 You can also report exceptions manually
 
-```
+```java
         try {
             ...
         } catch (JSONException e) {
@@ -47,7 +47,7 @@ You can also include object properties within the error report using `BugMailerN
 
 ***Example***
 
-```
+```java
 public class Person implements BugMailerNode {
 
     private final String name;
@@ -79,7 +79,7 @@ public class Person implements BugMailerNode {
 
 and pass the object to the `BugMailer.report()` method
 
-```
+```java
         final Person person = new Person("theapache64", "20");
 
         try {
@@ -100,7 +100,7 @@ and the error report will look like this
  
  You can also change the theme color of the report using the `BugMailerConfig` class on `init`
  
- ```
+ ```java
  BugMailer.init(this, new BugMailerConfig("theapache64@gmail.com")
                     .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500)
             );
@@ -112,7 +112,7 @@ You can also use custom colors with `#RGB`, `#RRGGBB` and `#AARRGGBB` formats.
 
 You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
 
-```
+```java
         try {
             BugMailer.init(this, new BugMailerConfig("theapache64@gmail.com")
                     .setThemeColor(Colors.MATERIAL_DEEP_BLUE_500)
@@ -128,10 +128,15 @@ You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
 As default, `BugMailer` uses one of my test email addresses to send reports.Since the credentials are not stable, I suggest you to set your own email address and password.This can be done using the `init` method. 
 
 ***Example***
-```
+```java
 BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword", "theapache64@gmail.com"));
 ```
 
 **Issue or Improvements**
 
 Shoot me a mail to theapache64@gmail.com :)
+
+**TODO**
+
+- Implement curl command for APIRequestBuilder (RetroKit)
+- Implement postman import string 

@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/theapache64/BugMailer'
     gitUrl = 'https://github.com/theapache64/BugMailer.git'
 
-    libraryVersion = '1.0.4'
+    libraryVersion = '1.0.5'
 
     developerId = 'theapache64'
     developerName = 'theapache64'
@@ -33,7 +33,7 @@ android {
         minSdkVersion 11
         targetSdkVersion 25
         versionCode 4
-        versionName "1.0.4"
+        versionName "1.0.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

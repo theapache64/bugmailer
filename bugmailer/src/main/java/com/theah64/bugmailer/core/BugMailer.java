@@ -11,6 +11,7 @@ import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
 import com.theah64.bugmailer.utils.CommonUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -71,7 +72,7 @@ public class BugMailer {
     }
 
 
-    private static void sendMail(final String message) {
+    private static void sendMail(final String message, final String subject) {
 
         if (session == null) {
 
@@ -113,14 +114,15 @@ public class BugMailer {
 
                         mimeMessage.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccBuilder.toString().substring(0, ccBuilder.length() - 1)));
                     }
-                    mimeMessage.setSubject(projectName + "-BugMailer");
+                    mimeMessage.setFrom(new InternetAddress(gmailUsername, projectName + " - BugMailer"));
+                    mimeMessage.setSubject(subject);
                     mimeMessage.setContent(message, "text/html; charset=utf-8");
 
                     Transport.send(mimeMessage);
 
                     System.out.println("BugReport sent\n" + message);
 
-                } catch (MessagingException e) {
+                } catch (MessagingException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                     System.out.println("Failed to send mail");
                 }
@@ -188,7 +190,7 @@ public class BugMailer {
                 .addCustomNode(customNode)
                 .build();
 
-        sendMail(errorReport);
+        sendMail(errorReport, primaryStackLine);
 
     }
 

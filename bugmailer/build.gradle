@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/theapache64/BugMailer'
     gitUrl = 'https://github.com/theapache64/BugMailer.git'
 
-    libraryVersion = '1.0.5'
+    libraryVersion = '1.0.6'
 
     developerId = 'theapache64'
     developerName = 'theapache64'
@@ -27,13 +27,15 @@ ext {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.0.5"
+        versionCode 5
+        versionName "1.0.6"
+
+
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -43,6 +45,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

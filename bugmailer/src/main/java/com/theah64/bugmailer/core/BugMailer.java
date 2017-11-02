@@ -3,7 +3,6 @@ package com.theah64.bugmailer.core;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 
 import com.theah64.bugmailer.exceptions.BugMailerException;
@@ -83,6 +82,9 @@ public class BugMailer {
             properties.put("mail.smtp.socketFactory.port", "465");
             properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
+            System.out.println("Username:" + gmailUsername);
+            System.out.println("Password:" + gmailPassword);
+
             session = Session.getInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -93,10 +95,9 @@ public class BugMailer {
         }
 
 
-        new AsyncTask<Void, Void, Void>() {
+        new Thread(new Runnable() {
             @Override
-            protected Void doInBackground(Void... params) {
-
+            public void run() {
                 Message mimeMessage = new MimeMessage(session);
                 try {
                     mimeMessage.setFrom(new InternetAddress(gmailUsername));
@@ -126,10 +127,8 @@ public class BugMailer {
                     e.printStackTrace();
                     System.out.println("Failed to send mail");
                 }
-
-                return null;
             }
-        }.execute();
+        }).start();
     }
 
 

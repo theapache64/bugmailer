@@ -19,7 +19,7 @@ public class App extends Application {
 
 
         try {
-            BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword", "theapache64@gmail.com"));
+            BugMailer.init(this, new BugMailerConfig("theapache64@gmail.com"));
         } catch (BugMailerException e) {
             e.printStackTrace();
         }

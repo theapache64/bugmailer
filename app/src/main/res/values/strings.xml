@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BugMailer Example</string>
+    <string name="CRASH_APP">CRASH APPLICATION</string>
 </resources>

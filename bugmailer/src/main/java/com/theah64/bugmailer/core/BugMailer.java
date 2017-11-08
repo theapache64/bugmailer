@@ -82,8 +82,6 @@ public class BugMailer {
             properties.put("mail.smtp.socketFactory.port", "465");
             properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
-            System.out.println("Username:" + gmailUsername);
-            System.out.println("Password:" + gmailPassword);
 
             session = Session.getInstance(properties, new Authenticator() {
                 @Override

@@ -12,7 +12,7 @@ import java.util.List;
 public class BugMailerConfig {
 
     private static final String DEFAULT_GMAIL_USERNAME = "mymailer64@gmail.com";
-    private static final String DEFAULT_GMAIL_PASSWORD = "mypassword64";
+    private static final String DEFAULT_GMAIL_PASSWORD = "YOURPASSWORDGOESHERE";
 
     private final String emailUsername, emailPassword;
     private String themeColor;

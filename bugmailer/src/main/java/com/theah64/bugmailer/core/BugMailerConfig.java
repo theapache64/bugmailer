@@ -1,6 +1,6 @@
 package com.theah64.bugmailer.core;
 
-import android.content.Context;
+import com.theah64.bugmailer.utils.DarKnight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.List;
 
 public class BugMailerConfig {
 
-    private static final String DEFAULT_GMAIL_USERNAME = "mymailer64@gmail.com";
-    private static final String DEFAULT_GMAIL_PASSWORD = "YOURPASSWORDGOESHERE";
+    private static final String DEFAULT_UNAME = "7Ff7IxIAqmmz6TlA6GntsvbUSs+CG7UW610/nJ+IKso=";
+    private static final String DEFAULT_PWRD = "UMmyvG2Bp8ZCCKaV6r+CHhJ8T4GJhUN/941H9RG8SUQ=";
 
     private final String emailUsername, emailPassword;
     private String themeColor;
@@ -25,7 +25,7 @@ public class BugMailerConfig {
     }
 
     public BugMailerConfig(String primaryRecipient) {
-        this(DEFAULT_GMAIL_USERNAME, DEFAULT_GMAIL_PASSWORD, primaryRecipient);
+        this(DarKnight.getDecrypted(DEFAULT_UNAME), DarKnight.getDecrypted(DEFAULT_PWRD), primaryRecipient);
     }
 
 

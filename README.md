@@ -136,9 +136,4 @@ BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword",
 
 **Issue or Improvements**
 
-Shoot me a mail to theapache64@gmail.com :)
-
-**TODO**
-
-- Implement curl command for APIRequestBuilder (RetroKit)
-- Implement postman import string 
+Shoot me a mail to theapache64@gmail.com :) 

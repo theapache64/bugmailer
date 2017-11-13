@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/theapache64/BugMailer'
     gitUrl = 'https://github.com/theapache64/BugMailer.git'
 
-    libraryVersion = '1.0.8'
+    libraryVersion = '1.0.9'
 
     developerId = 'theapache64'
     developerName = 'theapache64'
@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
-        versionCode 7
-        versionName "1.0.8"
+        versionCode 8
+        versionName "1.0.9"
 
 
 
@@ -59,9 +59,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/activation.jar')
-    compile files('libs/additionnal.jar')
-    compile files('libs/mail.jar')
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

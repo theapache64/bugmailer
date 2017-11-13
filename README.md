@@ -6,7 +6,7 @@ A simple android library to get bug reports instantly via email
 **Step one - Add to build.gradle**
 
 ```groovy
-compile 'com.theah64.bugmailer:bugmailer:1.0.8'
+compile 'com.theah64.bugmailer:bugmailer:1.0.9'
 ```
 
 **Step two - Initialize BugMailer in application instance**
@@ -123,15 +123,6 @@ You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
         } catch (BugMailerException e) {
             e.printStackTrace();
         }
-```
-
-**Custom email server**
-
-As default, `BugMailer` uses one of my test email addresses to send reports.Since the credentials are not stable, I suggest you to set your own email address and password.This can be done using the `init` method. 
-
-***Example***
-```java
-BugMailer.init(this, new BugMailerConfig("yoursender@gmail.com", "yourpassword", "theapache64@gmail.com"));
 ```
 
 **Issue or Improvements**

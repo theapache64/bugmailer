@@ -4,25 +4,23 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import com.theah64.bugmailer.exceptions.BugMailerException;
 import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
 import com.theah64.bugmailer.utils.CommonUtils;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by shifar on 15/4/16.
@@ -36,8 +34,6 @@ public class BugMailer {
     private static final String X = BugMailer.class.getSimpleName();
     private static String projectName;
     private static String packageName;
-    private static String gmailUsername, gmailPassword;
-    private static Session session;
     private static String appVersionName;
     private static String themeColor;
     private static BugMailerConfig config;
@@ -59,10 +55,6 @@ public class BugMailer {
         BugMailer.appVersionName = packageInfo.versionName;
         BugMailer.appVersionCode = packageInfo.versionCode;
         BugMailer.projectName = (String) context.getApplicationInfo().loadLabel(context.getPackageManager());
-
-        BugMailer.gmailUsername = config.getEmailUsername();
-        BugMailer.gmailPassword = config.getEmailPassword();
-
         BugMailer.themeColor = config.getThemeColor() == null ? DEFAULT_THEME_COLOR : config.getThemeColor();
 
 
@@ -71,7 +63,7 @@ public class BugMailer {
     }
 
 
-    private static void sendMail(final String message, final String subject) {
+    /*private static void sendMail(final String message, final String subject) {
 
         if (session == null) {
 
@@ -94,8 +86,10 @@ public class BugMailer {
 
 
         new Thread(new Runnable() {
+
             @Override
             public void run() {
+
                 Message mimeMessage = new MimeMessage(session);
                 try {
                     mimeMessage.setFrom(new InternetAddress(gmailUsername));
@@ -113,6 +107,7 @@ public class BugMailer {
 
                         mimeMessage.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccBuilder.toString().substring(0, ccBuilder.length() - 1)));
                     }
+
                     mimeMessage.setFrom(new InternetAddress(gmailUsername, projectName + " - BugMailer"));
                     mimeMessage.setSubject(subject);
                     mimeMessage.setContent(message, "text/html; charset=utf-8");
@@ -127,7 +122,7 @@ public class BugMailer {
                 }
             }
         }).start();
-    }
+    }*/
 
 
     private static String getProjectName() {
@@ -187,8 +182,43 @@ public class BugMailer {
                 .addCustomNode(customNode)
                 .build();
 
-        sendMail(errorReport, primaryStackLine);
+        //Building to list
+        final List<String> recipients = config.getRecipients();
+        final StringBuilder ccBuilder = new StringBuilder();
+        for (int i = 0; i < recipients.size(); i++) {
+            ccBuilder.append(recipients.get(i)).append(",");
+        }
 
+        sendMail(ccBuilder.substring(0, ccBuilder.length() - 1), errorReport, primaryStackLine);
+
+    }
+
+    private static final OkHttpClient okHttpClient = new OkHttpClient();
+
+    private static void sendMail(final String to, String message, String subject) {
+
+        final Request request = new Request.Builder()
+                .addHeader("Authorization", "1KGZGdZvgM")
+                .url("http://theapache64.xyz:8080/safemail/v1/sendMail")
+                .post(new FormBody.Builder()
+                        .add("from_personal", projectName + " - BugMailer")
+                        .add("to", to)
+                        .add("subject", subject)
+                        .add("message", message)
+                        .build())
+                .build();
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, @NonNull Response response) throws IOException {
+                System.out.println(response.body().string());
+            }
+        });
     }
 
     private static int getAppVersionCode() {

@@ -1,1 +1,1 @@
-include ':app', ':bugmailer', ':lib'
+include ':app', ':bugmailer', ':lab'

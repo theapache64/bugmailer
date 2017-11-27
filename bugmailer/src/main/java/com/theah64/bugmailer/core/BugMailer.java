@@ -32,6 +32,7 @@ public class BugMailer {
     private static final String DEFAULT_THEME_COLOR = Colors.MATERIAL_RED_500;
 
     private static final String X = BugMailer.class.getSimpleName();
+    private static final String SAFE_MAIL_API_KEY = "1KGZGdZvgM";
     private static String projectName;
     private static String packageName;
     private static String appVersionName;
@@ -198,7 +199,7 @@ public class BugMailer {
     private static void sendMail(final String to, String message, String subject) {
 
         final Request request = new Request.Builder()
-                .addHeader("Authorization", "1KGZGdZvgM")
+                .addHeader("Authorization", SAFE_MAIL_API_KEY)
                 .url("http://18.220.163.253:8080/safemail/v1/sendMail")
                 .post(new FormBody.Builder()
                         .add("from_personal", projectName + " - BugMailer")

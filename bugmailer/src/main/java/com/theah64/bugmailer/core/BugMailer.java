@@ -199,7 +199,7 @@ public class BugMailer {
 
         final Request request = new Request.Builder()
                 .addHeader("Authorization", "1KGZGdZvgM")
-                .url("http://theapache64.xyz:8080/safemail/v1/sendMail")
+                .url("http://18.220.163.253:8080/safemail/v1/sendMail")
                 .post(new FormBody.Builder()
                         .add("from_personal", projectName + " - BugMailer")
                         .add("to", to)

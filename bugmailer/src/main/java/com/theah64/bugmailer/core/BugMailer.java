@@ -4,23 +4,15 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
 
 import com.theah64.bugmailer.exceptions.BugMailerException;
 import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
 import com.theah64.bugmailer.utils.CommonUtils;
+import com.theah64.safemail.SafeMail;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by shifar on 15/4/16.
@@ -61,69 +53,12 @@ public class BugMailer {
 
         Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
         BugMailer.config = config;
+
+        //Initializing safemail
+        SafeMail.init(SAFE_MAIL_API_KEY);
     }
 
 
-    /*private static void sendMail(final String message, final String subject) {
-
-        if (session == null) {
-
-            final Properties properties = new Properties();
-            properties.put("mail.smtp.host", "smtp.gmail.com");
-            properties.put("mail.smtp.auth", "true");
-            properties.put("mail.smtp.port", "465");
-            properties.put("mail.smtp.socketFactory.port", "465");
-            properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-
-            session = Session.getInstance(properties, new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(gmailUsername, gmailPassword);
-                }
-            });
-
-        }
-
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                Message mimeMessage = new MimeMessage(session);
-                try {
-                    mimeMessage.setFrom(new InternetAddress(gmailUsername));
-
-                    final List<String> recipients = config.getRecipients();
-
-                    mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients.get(0)));
-
-                    if (recipients.size() > 1) {
-                        //has ccs
-                        final StringBuilder ccBuilder = new StringBuilder();
-                        for (int i = 1; i < recipients.size(); i++) {
-                            ccBuilder.append(recipients.get(i)).append(",");
-                        }
-
-                        mimeMessage.addRecipients(Message.RecipientType.CC, InternetAddress.parse(ccBuilder.toString().substring(0, ccBuilder.length() - 1)));
-                    }
-
-                    mimeMessage.setFrom(new InternetAddress(gmailUsername, projectName + " - BugMailer"));
-                    mimeMessage.setSubject(subject);
-                    mimeMessage.setContent(message, "text/html; charset=utf-8");
-
-                    Transport.send(mimeMessage);
-
-                    System.out.println("BugReport sent\n" + message);
-
-                } catch (MessagingException | UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    System.out.println("Failed to send mail");
-                }
-            }
-        }).start();
-    }*/
 
 
     private static String getProjectName() {
@@ -190,36 +125,14 @@ public class BugMailer {
             ccBuilder.append(recipients.get(i)).append(",");
         }
 
-        sendMail(ccBuilder.substring(0, ccBuilder.length() - 1), errorReport, primaryStackLine);
 
-    }
+        SafeMail.sendMail(
+                projectName + " - BugMailer",
+                ccBuilder.substring(0, ccBuilder.length() - 1),
+                primaryStackLine,
+                errorReport
+        );
 
-    private static final OkHttpClient okHttpClient = new OkHttpClient();
-
-    private static void sendMail(final String to, String message, String subject) {
-
-        final Request request = new Request.Builder()
-                .addHeader("Authorization", SAFE_MAIL_API_KEY)
-                .url("http://18.220.163.253:8080/safemail/v1/sendMail")
-                .post(new FormBody.Builder()
-                        .add("from_personal", projectName + " - BugMailer")
-                        .add("to", to)
-                        .add("subject", subject)
-                        .add("message", message)
-                        .build())
-                .build();
-
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, @NonNull Response response) throws IOException {
-                System.out.println(response.body().string());
-            }
-        });
     }
 
     private static int getAppVersionCode() {

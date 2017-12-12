@@ -1,5 +1,7 @@
 package com.theah64.bugmailer.core;
 
+import com.theah64.bugmailer.models.Recipient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,10 @@ import java.util.List;
 public class BugMailerConfig {
 
     private String themeColor;
-    private final List<String> recipients = new ArrayList<>();
+    private final List<Recipient> recipients = new ArrayList<>();
 
     public BugMailerConfig(String primaryRecipient) {
-        recipients.add(primaryRecipient);
+        addRecipientEmail(primaryRecipient);
     }
 
 
@@ -23,8 +25,7 @@ public class BugMailerConfig {
     }
 
     public BugMailerConfig addRecipientEmail(String email) {
-        recipients.add(email);
-        return this;
+        return addRecipientEmail(email, Throwable.class);
     }
 
 
@@ -32,7 +33,12 @@ public class BugMailerConfig {
         return themeColor;
     }
 
-    public List<String> getRecipients() {
+    public List<Recipient> getRecipients() {
         return recipients;
+    }
+
+    public BugMailerConfig addRecipientEmail(String email, Class<? extends Throwable> exceptionToBeReported) {
+        recipients.add(new Recipient(email, exceptionToBeReported));
+        return this;
     }
 }

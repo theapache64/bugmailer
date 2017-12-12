@@ -8,6 +8,7 @@ import android.os.Build;
 import com.theah64.bugmailer.exceptions.BugMailerException;
 import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
+import com.theah64.bugmailer.models.Recipient;
 import com.theah64.bugmailer.utils.CommonUtils;
 import com.theah64.safemail.SafeMail;
 
@@ -59,8 +60,6 @@ public class BugMailer {
     }
 
 
-
-
     private static String getProjectName() {
         return projectName;
     }
@@ -86,6 +85,7 @@ public class BugMailer {
     }
 
     public static void report(Throwable e, BugMailerNode customNode) {
+
 
         //Getting stack trace
         final String stackTrace = CommonUtils.getStackTrace(e);
@@ -119,11 +119,19 @@ public class BugMailer {
                 .build();
 
         //Building to list
-        final List<String> recipients = config.getRecipients();
+        final List<Recipient> recipients = config.getRecipients();
         final StringBuilder ccBuilder = new StringBuilder();
         for (int i = 0; i < recipients.size(); i++) {
-            ccBuilder.append(recipients.get(i)).append(",");
+
+            final Recipient recipient = recipients.get(i);
+
+            if (recipient.getExceptionClass().isAssignableFrom(e.getClass())) {
+                ccBuilder.append(recipients.get(i).getEmail()).append(",");
+            }
+
         }
+
+        System.out.println("To: " + ccBuilder.toString());
 
 
         SafeMail.sendMail(

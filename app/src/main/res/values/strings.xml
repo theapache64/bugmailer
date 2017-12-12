@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BugMailer Example</string>
     <string name="CRASH_APP">CRASH APPLICATION</string>
+    <string name="Throw_JSON_Exception">Throw JSONException</string>
 </resources>

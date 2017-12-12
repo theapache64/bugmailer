@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.theah64.bugmailer.core.BugMailer;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,13 +22,29 @@ public class MainActivity extends AppCompatActivity {
                 final Person person = new Person("theapache64", "20");
 
                 try {
-                    JSONObject jo = new JSONObject("custom-json");
-                } catch (JSONException e) {
+                    throw new IllegalArgumentException("Test exception");
+                } catch (IllegalArgumentException e) {
                     e.printStackTrace();
 
                     //Manually reporting with custom object
                     BugMailer.report(e, person);
                     Toast.makeText(MainActivity.this, "Crash thrown!: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+        findViewById(R.id.bThrowJSONException).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    throw new JSONException("Sample json exception");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                    BugMailer.report(e);
+                    Toast.makeText(MainActivity.this, "JSONCrash thrown!: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

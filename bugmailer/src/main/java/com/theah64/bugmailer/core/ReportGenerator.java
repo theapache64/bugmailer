@@ -1,8 +1,9 @@
 package com.theah64.bugmailer.core;
 
-import android.support.annotation.Nullable;
 
 import com.theah64.bugmailer.models.Node;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by theapache64 on 9/9/17.

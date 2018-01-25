@@ -1,6 +1,7 @@
 package com.theah64.bugmailer.models;
 
-import android.support.annotation.NonNull;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by theapache64 on 9/9/17.
@@ -14,7 +15,7 @@ public class Node {
 
     private final StringBuilder report;
 
-    public Node(@NonNull final String key, @NonNull final String value) {
+    public Node(@NotNull final String key, @NotNull final String value) {
         report = new StringBuilder(KEY_HEADER)
                 .append(key)
                 .append(KEY_FOOTER)
@@ -22,7 +23,7 @@ public class Node {
                 .append(VALUE_FOOTER);
     }
 
-    public Node(@NonNull String key, int sdkInt) {
+    public Node(@NotNull String key, int sdkInt) {
         this(key, String.valueOf(sdkInt));
     }
 

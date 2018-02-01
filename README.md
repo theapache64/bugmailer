@@ -125,6 +125,10 @@ You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
         }
 ```
 
+### TODOs
+
+- Integrate issue creation - (github and bitbucket)
+
 **Issue or Improvements**
 
 Shoot me a mail to theapache64@gmail.com :) 

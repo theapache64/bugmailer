@@ -13,6 +13,9 @@ import com.theah64.bugmailer.utils.CommonUtils;
 import com.theah64.bugmailer.utils.SecretConstants;
 import com.theah64.safemail.SafeMail;
 import com.theapache64.github_android_sdk.GitHubAPI;
+import com.theapache64.github_android_sdk.responses.CreateCommentResponse;
+import com.theapache64.github_android_sdk.responses.CreateIssueResponse;
+import com.theapache64.github_android_sdk.responses.ListIssuesResponse;
 
 import java.util.Date;
 import java.util.List;
@@ -109,11 +112,12 @@ public class BugMailer {
             stackTraceBuilder.append("<br>");
         }
 
+        final String fileName = e.getStackTrace()[0].getFileName();
         final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine)
                 .addNode(new BoldNode("Fatal Error", primaryStackLineHTML))
                 .addNode(new Node("App Version Name", BugMailer.getAppVersionName()))
                 .addNode(new Node("App Version Code", BugMailer.getAppVersionCode()))
-                .addNode(new Node("File Name", e.getStackTrace()[0].getFileName()))
+                .addNode(new Node("File Name", fileName))
                 .addNode(new Node("API Level", Build.VERSION.SDK_INT))
                 .addNode(new Node("Time of Occurrence", new Date().toString()))
                 .addNode(new Node("Device", Build.DEVICE))
@@ -145,6 +149,84 @@ public class BugMailer {
                 primaryStackLine,
                 errorReport
         );
+
+        if (config.isGitHubIssueTracker()) {
+
+            final String title = String.format("%s:%s",
+                    primaryStackLine,
+                    BugMailer.appVersionCode
+            );
+
+            //Building body
+            final GitHubCommentGenerator gitHubCommentGenerator = new GitHubCommentGenerator();
+            gitHubCommentGenerator.addNode("Fatal Error", primaryStackLineHTML)
+                    .addNode("App Version Name", BugMailer.getAppVersionName())
+                    .addNode("App Version Code", BugMailer.getAppVersionCode())
+                    .addNode("File Name", fileName)
+                    .addNode("API Level", Build.VERSION.SDK_INT)
+                    .addNode("Time of Occurrence", new Date().toString())
+                    .addNode("Device", Build.DEVICE)
+                    .addNode("Model", Build.MODEL)
+                    .addNode("Product", Build.PRODUCT)
+                    .addNode("Exception Message", stackTraceBuilder.toString());
+
+            if (customNode != null) {
+                for (int i = 0; i < customNode.getNodes().size(); i++) {
+                    Node x = customNode.getNodes().get(i);
+                    gitHubCommentGenerator.addNode(x.getKey(), x.getValue());
+                }
+            }
+
+            GitHubAPI.listIssues(config.getOwner(), config.getRepo(), new GitHubAPI.Callback<List<ListIssuesResponse.Issue>>() {
+                @Override
+                public void onSuccess(List<ListIssuesResponse.Issue> issues) {
+
+                    int issueNumber = -1;
+
+                    for (final ListIssuesResponse.Issue issue : issues) {
+                        if (issue.getTitle().equals(title)) {
+                            issueNumber = issue.getNumber();
+                            break;
+                        }
+                    }
+
+                    if (issueNumber != -1) {
+                        //New comment
+                        GitHubAPI.createComment(config.getOwner(), config.getRepo(), issueNumber, gitHubCommentGenerator.toString(), new GitHubAPI.Callback<CreateCommentResponse>() {
+                            @Override
+                            public void onSuccess(CreateCommentResponse createCommentResponse) {
+                                System.out.println("Added comment");
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+                        });
+                    } else {
+                        //New issue
+                        GitHubAPI.createIssue(config.getOwner(), config.getRepo(), title, gitHubCommentGenerator.toString(), new GitHubAPI.Callback<CreateIssueResponse>() {
+                            @Override
+                            public void onSuccess(CreateIssueResponse createIssueResponse) {
+                                System.out.println("New issue added");
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+                        });
+                    }
+
+                }
+
+                @Override
+                public void onError(Throwable t) {
+
+                }
+            });
+
+        }
 
     }
 

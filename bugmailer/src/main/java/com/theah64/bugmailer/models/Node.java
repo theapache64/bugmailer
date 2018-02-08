@@ -14,13 +14,25 @@ public class Node {
     private static final String VALUE_FOOTER = "</div> </td> </tr> </tbody> </table> </div> </div>";
 
     private final StringBuilder report;
+    private final String key;
+    private final String value;
 
     public Node(@NotNull final String key, @NotNull final String value) {
+        this.key = key;
+        this.value = value;
         report = new StringBuilder(KEY_HEADER)
                 .append(key)
                 .append(KEY_FOOTER)
                 .append(value.replaceAll("\n", "<br>"))
                 .append(VALUE_FOOTER);
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public Node(@NotNull String key, int sdkInt) {

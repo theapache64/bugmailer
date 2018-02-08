@@ -125,6 +125,22 @@ You can set CC to report mails using `BugMailerConfig.addRepientEmail()` method
         }
 ```
 
+**EMail with specific exception**
+
+You can set custom exception type to emails, so that they'll get bug report only when that specific exception occurred.
+
+```java
+	try {
+            BugMailer.init(this, new BugMailerConfig("theapache64@gmail.com")
+                    .addRecipientEmail("api_developer@example.com", JSONException.class)
+                    .addRecipientEmail("web_developer_1@example.com", JSONException.class)
+            );
+        } catch (BugMailerException e) {
+            e.printStackTrace();
+        }
+
+```
+
 ### TODOs
 
 - Integrate issue creation - (github and bitbucket)

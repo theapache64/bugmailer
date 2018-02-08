@@ -105,16 +105,16 @@ public class BugMailer {
         }
 
         final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine)
-                .addNode(new BoldNode("Fatal error", primaryStackLineHTML))
-                .addNode(new Node("App version name", BugMailer.getAppVersionName()))
-                .addNode(new Node("App version code", BugMailer.getAppVersionCode()))
-                .addNode(new Node("Filename", e.getStackTrace()[0].getFileName()))
+                .addNode(new BoldNode("Fatal Error", primaryStackLineHTML))
+                .addNode(new Node("App Version Name", BugMailer.getAppVersionName()))
+                .addNode(new Node("App Version Code", BugMailer.getAppVersionCode()))
+                .addNode(new Node("File Name", e.getStackTrace()[0].getFileName()))
                 .addNode(new Node("API Level", Build.VERSION.SDK_INT))
-                .addNode(new Node("Time of occurrence", new Date().toString()))
+                .addNode(new Node("Time of Occurrence", new Date().toString()))
                 .addNode(new Node("Device", Build.DEVICE))
                 .addNode(new Node("Model", Build.MODEL))
                 .addNode(new Node("Product", Build.PRODUCT))
-                .addNode(new Node("Exception message", stackTraceBuilder.toString()))
+                .addNode(new Node("Exception Message", stackTraceBuilder.toString()))
                 .addCustomNode(customNode)
                 .build();
 

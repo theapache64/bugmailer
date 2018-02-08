@@ -10,7 +10,9 @@ import com.theah64.bugmailer.models.BoldNode;
 import com.theah64.bugmailer.models.Node;
 import com.theah64.bugmailer.models.Recipient;
 import com.theah64.bugmailer.utils.CommonUtils;
+import com.theah64.bugmailer.utils.SecretConstants;
 import com.theah64.safemail.SafeMail;
+import com.theapache64.github_android_sdk.GitHubAPI;
 
 import java.util.Date;
 import java.util.List;
@@ -57,6 +59,9 @@ public class BugMailer {
 
         //Initializing safemail
         SafeMail.init(SAFE_MAIL_API_KEY);
+
+        //Initializing Github SDK
+        GitHubAPI.init(SecretConstants.GITHUB_ACCESS_TOKEN);
     }
 
 

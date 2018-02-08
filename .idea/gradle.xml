@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bugmailer" />
+            <option value="$PROJECT_DIR$/github_android_sdk_lib" />
             <option value="$PROJECT_DIR$/lab" />
           </set>
         </option>

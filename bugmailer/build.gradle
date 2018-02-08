@@ -26,12 +26,12 @@ ext {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 115
         versionName "1.1.5"
 
@@ -60,6 +60,7 @@ dependencies {
     compile 'com.theah64.safemail:safemail:1.0.0'
 
     compile 'org.jetbrains:annotations-java5:15.0'
+    compile project(path: ':github_android_sdk_lib')
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

@@ -27,6 +27,7 @@ public class App extends Application {
                             .addRecipientEmail("anoojns@gmail.com", JSONException.class)
                             .setThemeColor(Colors.MATERIAL_RED_500)
             );
+
         } catch (BugMailerException e) {
             e.printStackTrace();
         }

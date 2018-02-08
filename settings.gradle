@@ -1,1 +1,1 @@
-include ':app', ':bugmailer', ':lab'
+include ':app', ':bugmailer', ':lab', ':github_android_sdk_lib'

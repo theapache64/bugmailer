@@ -25,7 +25,7 @@ public class BugMailer {
     private static final String DEFAULT_THEME_COLOR = Colors.MATERIAL_RED_500;
 
     private static final String X = BugMailer.class.getSimpleName();
-    private static final String SAFE_MAIL_API_KEY = "1KGZGdZvgM";
+    private static final String SAFE_MAIL_API_KEY = "NsufXcUuoa";
     private static String projectName;
     private static String packageName;
     private static String appVersionName;

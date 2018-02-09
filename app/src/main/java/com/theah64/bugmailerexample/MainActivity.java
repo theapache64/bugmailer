@@ -9,6 +9,8 @@ import com.theah64.bugmailer.core.BugMailer;
 
 import org.json.JSONException;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
                 final Person person = new Person("theapache64", "20");
 
                 try {
-                    throw new IllegalArgumentException("Test exception");
-                } catch (IllegalArgumentException e) {
+                    throw new IOException("Test exception");
+                } catch (IOException e) {
                     e.printStackTrace();
 
                     //Manually reporting with custom object

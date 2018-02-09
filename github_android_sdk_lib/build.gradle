@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'github_android_sdk'
+    bintrayName = 'github_android_sdk_lib'
 
-    publishedGroupId = 'com.theapache64.github_android_sdk'
-    libraryName = 'github_android_sdk'
-    artifact = 'github_android_sdk'
+    publishedGroupId = 'com.theapache64.github_android_sdk_lib'
+    libraryName = 'github_android_sdk_lib'
+    artifact = 'github_android_sdk_lib'
 
     libraryDescription = 'GitHub SDK for Android'
 
     siteUrl = 'https://github.com/theapache64/github_android_sdk'
     gitUrl = 'https://github.com/theapache64/github_android_sdk.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.3'
 
     developerId = 'theapache64'
     developerName = 'theapache64'
@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 101
-        versionName "1.0.1"
+        versionCode 103
+        versionName "1.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

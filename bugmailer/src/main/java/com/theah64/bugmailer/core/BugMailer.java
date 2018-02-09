@@ -17,6 +17,7 @@ import com.theapache64.github_android_sdk.responses.CreateCommentResponse;
 import com.theapache64.github_android_sdk.responses.CreateIssueResponse;
 import com.theapache64.github_android_sdk.responses.ListIssuesResponse;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class BugMailer {
 
     private static final String X = BugMailer.class.getSimpleName();
     private static final String SAFE_MAIL_API_KEY = "NsufXcUuoa";
+    private static final String KEY_EXCEPTION_MESSAGE = "Exception Message";
     private static String projectName;
     private static String packageName;
     private static String appVersionName;
@@ -101,31 +103,47 @@ public class BugMailer {
         final String primaryStackLine = stackLines.length > 1 ? stackLines[0] + " " + stackLines[1].trim() : stackTrace;
         final String primaryStackLineHTML = String.format("<span style='color:#THEMECOLOR;'>%s %s</span>", stackLines[0], stackLines[1].trim());
 
-        final StringBuilder stackTraceBuilder = new StringBuilder();
+        final StringBuilder stackTraceBuilderHtml = new StringBuilder();
+        final StringBuilder simpleStackTraceBuilder = new StringBuilder();
         for (final String stackLine : stackLines) {
             if (stackLine.contains(BugMailer.getPackageName())) {
-                stackTraceBuilder.append("<span style='color:#THEMECOLOR;'><b>").append(stackLine).append("<b></span>");
+                stackTraceBuilderHtml.append("<span style='color:#THEMECOLOR;'><b>").append(stackLine).append("<b></span>");
             } else {
-                stackTraceBuilder.append(stackLine);
+                stackTraceBuilderHtml.append(stackLine);
             }
 
-            stackTraceBuilder.append("<br>");
+            simpleStackTraceBuilder.append(stackLine).append("\n");
+
+            stackTraceBuilderHtml.append("<br>");
         }
 
         final String fileName = e.getStackTrace()[0].getFileName();
-        final String errorReport = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine)
-                .addNode(new BoldNode("Fatal Error", primaryStackLineHTML))
-                .addNode(new Node("App Version Name", BugMailer.getAppVersionName()))
-                .addNode(new Node("App Version Code", BugMailer.getAppVersionCode()))
-                .addNode(new Node("File Name", fileName))
-                .addNode(new Node("API Level", Build.VERSION.SDK_INT))
-                .addNode(new Node("Time of Occurrence", new Date().toString()))
-                .addNode(new Node("Device", Build.DEVICE))
-                .addNode(new Node("Model", Build.MODEL))
-                .addNode(new Node("Product", Build.PRODUCT))
-                .addNode(new Node("Exception Message", stackTraceBuilder.toString()))
-                .addCustomNode(customNode)
-                .build();
+
+        //Data
+        final List<Node> dataNodes = new ArrayList<>();
+        dataNodes.add(new BoldNode("Fatal Error", primaryStackLineHTML));
+        dataNodes.add(new Node("App Version Name", BugMailer.getAppVersionName()));
+        dataNodes.add(new Node("App Version Code", BugMailer.getAppVersionCode()));
+        dataNodes.add(new Node("File Name", fileName));
+        dataNodes.add(new Node("API Level", Build.VERSION.SDK_INT));
+        dataNodes.add(new Node("Time of Occurrence", new Date().toString()));
+        dataNodes.add(new Node("Device", Build.DEVICE));
+        dataNodes.add(new Node("Model", Build.MODEL));
+        dataNodes.add(new Node("Product", Build.PRODUCT));
+        dataNodes.add(new Node(KEY_EXCEPTION_MESSAGE, stackTraceBuilderHtml.toString()));
+
+        if (customNode != null) {
+            dataNodes.addAll(customNode.getNodes());
+        }
+
+
+        final ReportGenerator errorReportGen = new ReportGenerator(BugMailer.getProjectName(), BugMailer.getPackageName(), primaryStackLine);
+
+        for (Node node : dataNodes) {
+            errorReportGen.addNode(node);
+        }
+
+        final String errorReport = errorReportGen.build();
 
         //Building to list
         final List<Recipient> recipients = config.getRecipients();
@@ -152,32 +170,28 @@ public class BugMailer {
 
         if (config.isGitHubIssueTracker()) {
 
+            System.out.println("Igniting GitHub issue management system");
+
             final String title = String.format("%s:%s",
                     primaryStackLine,
                     BugMailer.appVersionCode
             );
 
+            System.out.println("Issue title: " + title);
+
+
             //Building body
             final GitHubCommentGenerator gitHubCommentGenerator = new GitHubCommentGenerator();
-            gitHubCommentGenerator.addNode("Fatal Error", primaryStackLineHTML)
-                    .addNode("App Version Name", BugMailer.getAppVersionName())
-                    .addNode("App Version Code", BugMailer.getAppVersionCode())
-                    .addNode("File Name", fileName)
-                    .addNode("API Level", Build.VERSION.SDK_INT)
-                    .addNode("Time of Occurrence", new Date().toString())
-                    .addNode("Device", Build.DEVICE)
-                    .addNode("Model", Build.MODEL)
-                    .addNode("Product", Build.PRODUCT)
-                    .addNode("Exception Message", stackTraceBuilder.toString());
 
-            if (customNode != null) {
-                for (int i = 0; i < customNode.getNodes().size(); i++) {
-                    Node x = customNode.getNodes().get(i);
-                    gitHubCommentGenerator.addNode(x.getKey(), x.getValue());
+            for (Node node : dataNodes) {
+                if (node.getKey().equals(KEY_EXCEPTION_MESSAGE)) {
+                    gitHubCommentGenerator.addCodeNode(node.getKey(), simpleStackTraceBuilder.toString());
+                } else {
+                    gitHubCommentGenerator.addNode(node.getKey(), node instanceof BoldNode ? node.getValue().replaceAll("(<b>|</b>)", "") : node.getValue());
                 }
             }
 
-            GitHubAPI.listIssues(config.getOwner(), config.getRepo(), new GitHubAPI.Callback<List<ListIssuesResponse.Issue>>() {
+            GitHubAPI.listIssues(config.getOwner(), config.getRepo(), GitHubAPI.IssueType.ALL, new GitHubAPI.Callback<List<ListIssuesResponse.Issue>>() {
                 @Override
                 public void onSuccess(List<ListIssuesResponse.Issue> issues) {
 

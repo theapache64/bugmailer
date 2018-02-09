@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by theapache64 on 8/2/18.
@@ -34,7 +35,8 @@ public interface APIInterface {
     Call<List<ListIssuesResponse.Issue>> listIssues(
             @Header("Authorization") String accessToken,
             @Path("owner") String owner,
-            @Path("repo") String repo
+            @Path("repo") String repo,
+            @Query("state") String state
     );
 
     @POST("repos/{owner}/{repo}/issues/{number}/comments")

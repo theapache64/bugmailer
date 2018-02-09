@@ -8,13 +8,18 @@ public class GitHubCommentGenerator {
     private final StringBuilder builder = new StringBuilder();
 
     public GitHubCommentGenerator addNode(String key, String value) {
-        builder.append(key).append(":").append(value).append("\n");
+        builder.append("**").append(key).append("**").append("\n").append(value).append("\n\n");
         return this;
     }
 
 
     public GitHubCommentGenerator addNode(String key, int value) {
         return addNode(key, String.valueOf(value));
+    }
+
+    public GitHubCommentGenerator addCodeNode(String key, String value) {
+        builder.append("**").append(key).append("**").append("\n```java\n").append(value).append("```\n\n");
+        return this;
     }
 
     @Override

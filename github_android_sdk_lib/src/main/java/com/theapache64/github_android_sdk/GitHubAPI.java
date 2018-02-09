@@ -57,8 +57,23 @@ public class GitHubAPI {
         client.createComment(accessToken, owner, repo, number, new CreateCommentRequest(body)).enqueue(new CallbackManager<CreateCommentResponse>(callback));
     }
 
-    public static void listIssues(String owner, String repo, final Callback<List<ListIssuesResponse.Issue>> callback) {
-        client.listIssues(accessToken, owner, repo).enqueue(new CallbackManager<>(callback));
+    public static void listIssues(String owner, String repo, IssueType issueType, final Callback<List<ListIssuesResponse.Issue>> callback) {
+        client.listIssues(accessToken, owner, repo, issueType.getKey()).enqueue(new CallbackManager<>(callback));
+    }
+
+    public enum IssueType {
+
+        ALL("all"), OPEN("open"), CLOSED("closed");
+
+        private final String key;
+
+        IssueType(String key) {
+            this.key = key;
+        }
+
+        public String getKey() {
+            return key;
+        }
     }
 
 

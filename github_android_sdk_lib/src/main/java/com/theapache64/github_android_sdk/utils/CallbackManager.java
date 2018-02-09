@@ -42,6 +42,7 @@ public class CallbackManager<RESPONSE> implements Callback<RESPONSE> {
 
     @Override
     public void onFailure(@NonNull Call<RESPONSE> call, Throwable t) {
+        t.printStackTrace();
         callback.onError(t);
     }
 }

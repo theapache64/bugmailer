@@ -6,7 +6,7 @@ A simple android library to get bug reports instantly via email
 **Step one - Add to build.gradle**
 
 ```groovy
-compile 'com.theah64.bugmailer:bugmailer:1.1.5'
+compile 'com.theah64.bugmailer:bugmailer:1.1.8'
 ```
 
 **Step two - Initialize BugMailer in application instance**
@@ -139,6 +139,14 @@ You can set custom exception type to emails, so that they'll get bug report only
             e.printStackTrace();
         }
 
+```
+
+**GitHub issue tracker integration**
+
+To integrate your github repo's issue tracker with BugMailer, use `BugMailerConfig#enableGitHubIssueTracker`.
+
+```java
+    bugmailerConfig.enableGitHubIssueTracker("author-name", "your-repo-name")
 ```
 
 ### TODOs

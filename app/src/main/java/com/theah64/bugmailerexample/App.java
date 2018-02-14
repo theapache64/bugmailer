@@ -26,7 +26,6 @@ public class App extends Application {
                     new BugMailerConfig("theapache64@gmail.com")
                             .addRecipientEmail("anoojns@gmail.com", JSONException.class)
                             .setThemeColor(Colors.MATERIAL_RED_500)
-                            .enableGitHubIssueTracker("theapache64", "lab")
             );
 
         } catch (BugMailerException e) {

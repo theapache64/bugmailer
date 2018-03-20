@@ -26,6 +26,7 @@ public class App extends MultiDexApplication {
             BugMailer.init(this,
                     new BugMailerConfig("theapache64@gmail.com")
                             .addRecipientEmail("anoojns@gmail.com", JSONException.class)
+                            .enableGitHubIssueTracker("theapache64", "lab")
                             .setThemeColor(Colors.MATERIAL_RED_500)
             );
 

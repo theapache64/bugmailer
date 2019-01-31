@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BugMailer.iml" filepath="$PROJECT_DIR$/BugMailer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bugmailer.iml" filepath="$PROJECT_DIR$/bugmailer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bugmailer/bugmailer.iml" filepath="$PROJECT_DIR$/bugmailer/bugmailer.iml" />
       <module fileurl="file://$PROJECT_DIR$/bugmailer/bugmailer-bugmailer.iml" filepath="$PROJECT_DIR$/bugmailer/bugmailer-bugmailer.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab/lab.iml" filepath="$PROJECT_DIR$/lab/lab.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lab/lab.iml" filepath="$PROJECT_DIR$/lab/lab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projects-bugmailer.iml" filepath="$PROJECT_DIR$/projects-bugmailer.iml" />
     </modules>
   </component>
 </project>

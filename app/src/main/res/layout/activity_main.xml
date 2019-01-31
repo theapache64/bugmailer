@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context="com.theah64.bugmailerexample.MainActivity">
 
-
     <Button
         android:id="@+id/bThrowJSONException"
         android:layout_width="match_parent"

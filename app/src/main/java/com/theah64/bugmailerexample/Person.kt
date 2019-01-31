@@ -10,11 +10,9 @@ import com.theah64.bugmailer.models.Node
  */
 
 class Person internal constructor(val name: String, val age: String) : BugMailerNode {
-
-    override fun getNodes(): List<Node> {
-        return NodeBuilder()
+    override val nodes: List<Node>
+        get() = NodeBuilder()
                 .add("Name", name)
                 .add("Age", age)
                 .build()
-    }
 }

@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
-
 import com.theah64.bugmailer.exceptions.BugMailerException
 import com.theah64.bugmailer.models.BoldNode
 import com.theah64.bugmailer.models.Node
-import com.theah64.bugmailer.models.Recipient
 import com.theah64.bugmailer.utils.CommonUtils
 import com.theah64.bugmailer.utils.SecretConstants
 import com.theah64.safemail.SafeMail
@@ -16,9 +14,7 @@ import com.theapache64.github_android_sdk.GitHubAPI
 import com.theapache64.github_android_sdk.responses.CreateCommentResponse
 import com.theapache64.github_android_sdk.responses.CreateIssueResponse
 import com.theapache64.github_android_sdk.responses.ListIssuesResponse
-
-import java.util.ArrayList
-import java.util.Date
+import java.util.*
 
 /**
  * Created by shifar on 15/4/16.
@@ -43,7 +39,7 @@ object BugMailer {
     @Throws(BugMailerException::class)
     fun init(context: Context, config: BugMailerConfig) {
 
-        BugMailer.packageName = context.packageName
+        packageName = context.packageName
 
         val packageInfo: PackageInfo
         try {
@@ -53,10 +49,10 @@ object BugMailer {
             throw BugMailerException("Couldn't find package name. Default 'Unknown' set")
         }
 
-        BugMailer.appVersionName = packageInfo.versionName
-        BugMailer.appVersionCode = packageInfo.versionCode
-        BugMailer.projectName = context.applicationInfo.loadLabel(context.packageManager) as String
-        BugMailer.themeColor = if (config.themeColor == null) DEFAULT_THEME_COLOR else config.themeColor
+        appVersionName = packageInfo.versionName
+        appVersionCode = packageInfo.versionCode
+        projectName = context.applicationInfo.loadLabel(context.packageManager) as String
+        themeColor = if (config.themeColor == null) DEFAULT_THEME_COLOR else config.themeColor
 
 
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler())
@@ -82,7 +78,7 @@ object BugMailer {
         val stackTraceBuilderHtml = StringBuilder()
         val simpleStackTraceBuilder = StringBuilder()
         for (stackLine in stackLines) {
-            if (stackLine.contains(BugMailer.packageName!!)) {
+            if (stackLine.contains(packageName!!)) {
                 stackTraceBuilderHtml.append("<span style='color:#THEMECOLOR;'><b>").append(stackLine).append("<b></span>")
             } else {
                 stackTraceBuilderHtml.append(stackLine)
@@ -98,8 +94,8 @@ object BugMailer {
         //Data
         val dataNodes = ArrayList<Node>()
         dataNodes.add(BoldNode("Fatal Error", primaryStackLineHTML))
-        dataNodes.add(Node("App Version Name", BugMailer.appVersionName!!))
-        dataNodes.add(Node("App Version Code", BugMailer.appVersionCode))
+        dataNodes.add(Node("App Version Name", appVersionName!!))
+        dataNodes.add(Node("App Version Code", appVersionCode))
         dataNodes.add(Node("File Name", fileName))
         dataNodes.add(Node("API Level", Build.VERSION.SDK_INT))
         dataNodes.add(Node("Time of Occurrence", Date().toString()))
@@ -113,7 +109,7 @@ object BugMailer {
         }
 
 
-        val errorReportGen = ReportGenerator(BugMailer.projectName, BugMailer.packageName, primaryStackLine)
+        val errorReportGen = ReportGenerator(projectName, packageName, primaryStackLine)
 
         for (node in dataNodes) {
             errorReportGen.addNode(node)
@@ -150,7 +146,7 @@ object BugMailer {
 
             val title = String.format("%s:%s",
                     primaryStackLine,
-                    BugMailer.appVersionCode
+                    appVersionCode
             )
 
             println("Issue title: $title")

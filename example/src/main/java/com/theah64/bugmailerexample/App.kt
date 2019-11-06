@@ -25,7 +25,7 @@ class App : MultiDexApplication() {
             BugMailer.init(this,
                     BugMailerConfig("theapache64@gmail.com")
                             .addRecipientEmail("anoojns@gmail.com", JSONException::class.java)
-                            .enableGitHubIssueTracker("theapache64", "lab")
+                            //.enableGitHubIssueTracker("theapache64", "lab")
                             .setThemeColor(Colors.MATERIAL_RED_500)
             )
 

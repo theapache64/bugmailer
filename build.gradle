@@ -5,8 +5,8 @@ buildscript {
     ext.compile_sdk_version = 28
     ext.min_sdk_version = 14
     ext.target_sdk_version = 28
-    ext.library_version = '3.0.1'
-    ext.library_version_int = 301
+    ext.library_version = '3.0.2-alpha01'
+    ext.library_version_int = 30201
     ext.support_library_version = '28.0.0'
     ext.build_tools_version = '28.0.3'
 

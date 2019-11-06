@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/example/app.iml" filepath="$PROJECT_DIR$/example/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bugmailer.iml" filepath="$PROJECT_DIR$/bugmailer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bugmailer/bugmailer.iml" filepath="$PROJECT_DIR$/bugmailer/bugmailer.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/bugmailer-bugmailer.iml" filepath="$PROJECT_DIR$/library/bugmailer-bugmailer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bugmailer-example.iml" filepath="$PROJECT_DIR$/bugmailer-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/bugmailer-example-app.iml" filepath="$PROJECT_DIR$/app/bugmailer-example-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/lab/lab.iml" filepath="$PROJECT_DIR$/lab/lab.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
